@@ -4,12 +4,14 @@ import { Dimensions, Platform, TouchableOpacity, View } from "react-native";
 
 function Board({
   setWinner,
+  winner,
   setCurrentPlayer,
   currentPlayer,
   reset,
   onResetComplete,
 }: {
   setWinner: React.Dispatch<React.SetStateAction<Player>>;
+  winner: Player;
   setCurrentPlayer: React.Dispatch<React.SetStateAction<Player>>;
   currentPlayer: Player;
   reset: boolean;
@@ -45,12 +47,20 @@ function Board({
   }, []);
 
   function handleCellClick(row: number, col: number) {
+    if (winner !== Player.None) {
+      return;
+    }
+    let placed = false;
     const newBoard = [...board];
     for (let i = 5; i >= 0; i--) {
       if (newBoard[i][col] === Player.None) {
         newBoard[i][col] = currentPlayer;
+        placed = true;
         break;
       }
+    }
+    if (!placed) {
+      return;
     }
     setCurrentPlayer((prev) =>
       prev === Player.YELLOW ? Player.RED : Player.YELLOW

@@ -23,6 +23,7 @@ export default function Index() {
       <View className="flex-1 justify-center items-center">
         <Board
           setWinner={setWinner}
+          winner={winner}
           setCurrentPlayer={setCurrentPlayer}
           currentPlayer={currentPlayer}
           reset={reset}
